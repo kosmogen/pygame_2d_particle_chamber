@@ -5,9 +5,8 @@ import sys
 import time
 from pygame.locals import *
 from Ship import Ship
-from Asteroid import Asteroid
 
-class AsteroidsGame:
+class ParticleChamber:
     """Contains all the variables and methods for running the main game loop."""
     def __init__(self):
         self.FPS = 60
@@ -35,15 +34,6 @@ class AsteroidsGame:
         # Initial asteroids
         self.asteroids = pygame.sprite.Group()
 
-        for i in range(0, 10):
-            x_offset = randint(50, 300)
-            y_offset = randint(50, 200)
-            x_offset = choice([x_offset, -x_offset])
-            y_offset = choice([y_offset, -y_offset])
-
-            asteroid = Asteroid(self.player_ship.x_pos + x_offset, self.player_ship.y_pos + y_offset, 10)
-            self.asteroids.add(asteroid)
-
         # main loop
         while True:
             for event in pygame.event.get():
@@ -70,5 +60,5 @@ class AsteroidsGame:
             self.FramePerSec.tick(self.FPS)
 
 if __name__ == '__main__':
-    game = AsteroidsGame()
+    game = ParticleChamber()
     game.game_loop()
