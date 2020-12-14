@@ -1,10 +1,10 @@
 """ Main file of asteroids."""
 import pygame
-from random import *
 import sys
 import time
 from pygame.locals import *
-from Ship import Ship
+from Model import Model
+from Particle import Particle
 
 class ParticleChamber:
     """Contains all the variables and methods for running the main game loop."""
@@ -17,22 +17,18 @@ class ParticleChamber:
         self.FramePerSec = pygame.time.Clock()
         self.DISPLAYSURF = pygame.display.set_mode(self.WINDOW_RES)
 
-    def death_screen(self):
-        """Renders the death screen when a player collides with an asteroid."""
-        self.DISPLAYSURF.fill((0, 255, 0))
-        pygame.display.update()
-        time.sleep(2)
-        pygame.quit()
-        sys.exit()
-
     def game_loop(self):
         """Main game loop."""
         # fixed sprites
-        self.player_ship = Ship(*self.WINDOW_RES)
+        self.player_ship = Model(*self.WINDOW_RES, 'player_ship.png')
         self.player_ship.update()
 
         # Initial asteroids
-        self.asteroids = pygame.sprite.Group()
+        self.particles = pygame.sprite.Group()
+
+        # Particle generators
+        particle = Particle(*self.WINDOW_RES)
+        self.particles.add(particle)
 
         # main loop
         while True:
@@ -43,18 +39,19 @@ class ParticleChamber:
 
             # Update sprites
             self.player_ship.update()
-            for asteroid in self.asteroids:
+            for asteroid in self.particles:
                 asteroid.update()
 
             # Draw sprites
             self.DISPLAYSURF.fill(self.BG_COLOR)
             self.player_ship.draw(self.DISPLAYSURF)
-            for asteroid in self.asteroids:
+            for asteroid in self.particles:
                 asteroid.draw(self.DISPLAYSURF)
 
             # Detect collision between player and any asteroids
-            if pygame.sprite.spritecollideany(self.player_ship, self.asteroids, pygame.sprite.collide_mask):
-                self.death_screen()
+            if pygame.sprite.spritecollideany(self.player_ship, self.particles, pygame.sprite.collide_mask):
+                # TODO: animate particle bounce
+                pass
 
             pygame.display.update()
             self.FramePerSec.tick(self.FPS)

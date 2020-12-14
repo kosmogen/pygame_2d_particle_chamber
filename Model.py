@@ -2,12 +2,18 @@ import pygame
 import math
 from pygame.locals import *
 
-class Ship(pygame.sprite.Sprite):
-    """Represents the player's ship in asteroids."""
-    def __init__(self, screen_width, screen_height):
+class Model(pygame.sprite.Sprite):
+    """Represents the model to be subjected to the particle chamber. """
+    def __init__(self, screen_width, screen_height, model_img_path):
+        """Constructor for Model class.
+        Arguments:
+            screen_width: the width of the surface to blit to in pixels
+            screen_height: the height of the surface to blit to in pixels
+            model_img_path: path to a transparent png that acts as a 2D model
+        """
         super().__init__()
 
-        self.image = pygame.image.load('player_ship.png')
+        self.image = pygame.image.load(model_img_path)
         
         self.mask = pygame.mask.from_surface(self.image)
 
