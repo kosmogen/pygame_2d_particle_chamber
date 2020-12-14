@@ -54,7 +54,7 @@ class ParticleChamber:
             for particle in self.particles:
                 particle.draw(self.DISPLAYSURF)
 
-            # Detect collision between player and any asteroids
+            # Detect collision between model and particles
             for particle in pygame.sprite.groupcollide(self.models, self.particles, False, False, 
                                                         pygame.sprite.collide_mask):
                 if type(particle) is Particle:
