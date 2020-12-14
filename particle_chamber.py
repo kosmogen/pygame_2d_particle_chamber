@@ -10,7 +10,7 @@ from particle_emitter import ParticleEmitter
 class ParticleChamber:
     """Contains all the variables and methods for running the main game loop."""
     def __init__(self):
-        self.FPS = 60
+        self.FPS = 30
         self.WINDOW_RES = (640, 480)
         self.BG_COLOR = (0, 0, 0) # RGB for black
 
@@ -24,13 +24,14 @@ class ParticleChamber:
         self.player_ship = Model(*self.WINDOW_RES, 'player_ship.png')
         self.player_ship.update()
 
-        # Initial asteroids
+        # Particle emitters
         self.particles = pygame.sprite.Group()
-        self.emitter = ParticleEmitter(*self.WINDOW_RES, 320, self.particles)
+        self.emitters = []
+        for x_col in range(0, self.WINDOW_RES[0], 5):
+            emitter = ParticleEmitter(*self.WINDOW_RES, x_col, self.particles)
+            self.emitters.append(emitter)
 
-        # Particle generators
-        # particle = Particle(*self.WINDOW_RES, 320)
-        # self.particles.add(particle)
+        self.emitter = ParticleEmitter(*self.WINDOW_RES, 320, self.particles)
 
         # main loop
         while True:
@@ -40,16 +41,17 @@ class ParticleChamber:
                     sys.exit()
 
             # Update sprites
-            self.emitter.update()
+            for emitter in self.emitters:
+                emitter.update()
             self.player_ship.update()
-            for asteroid in self.particles:
-                asteroid.update()
+            for particle in self.particles:
+                particle.update()
 
             # Draw sprites
             self.DISPLAYSURF.fill(self.BG_COLOR)
             self.player_ship.draw(self.DISPLAYSURF)
-            for asteroid in self.particles:
-                asteroid.draw(self.DISPLAYSURF)
+            for particle in self.particles:
+                particle.draw(self.DISPLAYSURF)
 
             # Detect collision between player and any asteroids
             if pygame.sprite.spritecollideany(self.player_ship, self.particles, pygame.sprite.collide_mask):

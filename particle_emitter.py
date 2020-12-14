@@ -4,7 +4,7 @@ from pygame.locals import *
 from Particle import Particle
 
 class ParticleEmitter():
-    def __init__(self, screen_width, screen_height, x_col, particles, emit_time_in_sec = 0.5):
+    def __init__(self, screen_width, screen_height, x_col, particles, emit_time_in_sec = 1):
         self.last_emit_time = time.time()
         self.emit_time_in_sec = emit_time_in_sec
         self.screen_width = screen_width
