@@ -5,6 +5,7 @@ import time
 from pygame.locals import *
 from Model import Model
 from Particle import Particle
+from particle_emitter import ParticleEmitter
 
 class ParticleChamber:
     """Contains all the variables and methods for running the main game loop."""
@@ -25,10 +26,11 @@ class ParticleChamber:
 
         # Initial asteroids
         self.particles = pygame.sprite.Group()
+        self.emitter = ParticleEmitter(*self.WINDOW_RES, 320, self.particles)
 
         # Particle generators
-        particle = Particle(*self.WINDOW_RES)
-        self.particles.add(particle)
+        # particle = Particle(*self.WINDOW_RES, 320)
+        # self.particles.add(particle)
 
         # main loop
         while True:
@@ -38,6 +40,7 @@ class ParticleChamber:
                     sys.exit()
 
             # Update sprites
+            self.emitter.update()
             self.player_ship.update()
             for asteroid in self.particles:
                 asteroid.update()
