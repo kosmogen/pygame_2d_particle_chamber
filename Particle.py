@@ -4,7 +4,14 @@ from pygame.locals import *
 
 class Particle(pygame.sprite.Sprite):
     """Represents a single particle that bounces when it collides with the model."""
-    def __init__(self, screen_width, screen_height, x_col, y_pos):
+    def __init__(self, screen_width, screen_height, x_pos, y_pos):
+        """Constructor for Particle class
+        Arguments:
+            screen_width: the width of the surface to blit to in pixels
+            screen_height: the height of the surface to blit to in pixels
+            x_pos: the x position to start in
+            y_pos: the initial y position
+        """
         super().__init__()
 
         self.image = pygame.Surface((1,1))
@@ -12,7 +19,7 @@ class Particle(pygame.sprite.Sprite):
         
         self.mask = pygame.mask.from_surface(self.image)
 
-        self.x_pos = x_col
+        self.x_pos = x_pos
         self.y_pos = y_pos
         self.y_velocity = 1
         self.x_velocity = 0
@@ -43,3 +50,7 @@ class Particle(pygame.sprite.Sprite):
 
         self.rect.centerx = self.x_pos
         self.rect.centery = self.y_pos
+    
+    def bounce(self):
+        # TODO: Calculate bounce
+        pass

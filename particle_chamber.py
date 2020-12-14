@@ -20,10 +20,11 @@ class ParticleChamber:
         self.DISPLAYSURF = pygame.display.set_mode(self.WINDOW_RES)
 
     def game_loop(self):
-        """Main game loop."""
-        # fixed sprites
+        """Main simulation loop."""
+        # model to be subjected to the particle chamber
         self.model = Model(*self.WINDOW_RES, 'player_ship.png')
-        self.model.update()
+        self.models = pygame.sprite.Group()
+        self.models.add(self.model)
 
         # Particle emitters
         self.particles = pygame.sprite.Group()
@@ -54,9 +55,10 @@ class ParticleChamber:
                 particle.draw(self.DISPLAYSURF)
 
             # Detect collision between player and any asteroids
-            if pygame.sprite.spritecollideany(self.model, self.particles, pygame.sprite.collide_mask):
-                # TODO: animate particle bounce
-                pass
+            for particle in pygame.sprite.groupcollide(self.models, self.particles, False, False, 
+                                                        pygame.sprite.collide_mask):
+                if type(particle) is Particle:
+                    particle.bounce()
 
             pygame.display.update()
             self.FramePerSec.tick(self.FPS)
