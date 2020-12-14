@@ -55,8 +55,9 @@ class ParticleChamber:
                 particle.draw(self.DISPLAYSURF)
 
             # Detect collision between model and particles
-            for particle in pygame.sprite.groupcollide(self.models, self.particles, False, False, 
-                                                        pygame.sprite.collide_mask):
+            colliding_particles = pygame.sprite.groupcollide(self.particles, self.models, False, False, 
+                                                        pygame.sprite.collide_mask)
+            for particle in colliding_particles:
                 if type(particle) is Particle:
                     particle.bounce()
 

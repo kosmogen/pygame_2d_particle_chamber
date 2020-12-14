@@ -52,5 +52,5 @@ class Particle(pygame.sprite.Sprite):
         self.rect.centery = self.y_pos
     
     def bounce(self):
-        # TODO: Calculate bounce
+        # TODO: Calculate bounce from incident angle
         pass

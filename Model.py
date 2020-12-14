@@ -34,4 +34,18 @@ class Model(pygame.sprite.Sprite):
         surface.blit(self.display_image, self.rect)
 
     def update(self):
-        pass
+        pressed_keys = pygame.key.get_pressed()
+        
+        if pressed_keys[K_LEFT]:
+            self.angle = self.angle + 1
+            self.display_image = pygame.transform.rotate(self.image, self.angle)
+            self.rect = self.display_image.get_rect()
+        if pressed_keys[K_RIGHT]:
+            self.angle = self.angle - 1
+            self.display_image = pygame.transform.rotate(self.image, self.angle)
+            self.rect = self.display_image.get_rect()
+
+        self.rect.centerx = self.x_pos
+        self.rect.centery = self.y_pos
+
+
