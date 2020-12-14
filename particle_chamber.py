@@ -30,10 +30,8 @@ class ParticleChamber:
         self.emitters = []
         for x_col in range(self.model.rect.left - (self.particle_x_step_res * 3), 
                             self.model.rect.right + (self.particle_x_step_res * 3), self.particle_x_step_res):
-            emitter = ParticleEmitter(*self.WINDOW_RES, x_col, self.particles)
+            emitter = ParticleEmitter(*self.WINDOW_RES, x_col, self.model.rect.top - 100, self.particles)
             self.emitters.append(emitter)
-
-        self.emitter = ParticleEmitter(*self.WINDOW_RES, 320, self.particles)
 
         # main loop
         while True:
